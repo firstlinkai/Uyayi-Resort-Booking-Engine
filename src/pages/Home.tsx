@@ -201,11 +201,11 @@ export default function Home() {
                   <div className="relative h-64 overflow-hidden">
                     <img 
                       src={room.thumbnail_url || room.image || {
-                        'Beachfront Villa': 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2070&auto=format&fit=crop',
-                        'Ocean Suite': 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop',
-                        'Garden Deluxe Room': 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format&fit=crop',
-                        'Family Villa': 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop',
-                        'Pool Suite': 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=2070&auto=format&fit=crop'
+                        'Beachfront Villa': 'https://tukezchosvgcplqjswns.supabase.co/storage/v1/object/public/rooms/Beachfront%20Villa.jpeg',
+                        'Ocean Suite': 'https://tukezchosvgcplqjswns.supabase.co/storage/v1/object/public/rooms/Ocean%20Suite.jpeg',
+                        'Garden Deluxe Room': 'https://tukezchosvgcplqjswns.supabase.co/storage/v1/object/public/rooms/Garden%20Deluxe%20Room.jpeg',
+                        'Family Villa': 'https://tukezchosvgcplqjswns.supabase.co/storage/v1/object/public/rooms/Family%20Villa.jpeg',
+                        'Pool Suite': 'https://tukezchosvgcplqjswns.supabase.co/storage/v1/object/public/rooms/Pool%20Suite.jpeg'
                       }[(room as any).name || room.name] || 'https://images.unsplash.com/photo-1582719478250-c89ca4dc85b?q=80&w=2070&auto=format&fit=crop'} 
                       alt={room.name} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
