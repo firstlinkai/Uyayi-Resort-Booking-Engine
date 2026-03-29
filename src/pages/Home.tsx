@@ -132,7 +132,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop" 
+              src="/Media/Images/beach-02.jpg" 
               alt="Resort aerial view" 
               className="w-full h-[600px] object-cover rounded-sm shadow-lg"
             />

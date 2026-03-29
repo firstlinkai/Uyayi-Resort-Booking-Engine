@@ -97,7 +97,7 @@ export default function About() {
           </div>
           <div className="w-full lg:w-1/2 h-[500px] rounded-sm overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=2074&auto=format&fit=crop" 
+              src="/Media/Images/beach-01.jpg" 
               alt="Villa Interior" 
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
