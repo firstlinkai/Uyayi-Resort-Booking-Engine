@@ -105,7 +105,7 @@ export default function Activities() {
       <section className="relative h-[65vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/30 z-10" />
         <img 
-          src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070&auto=format&fit=crop" 
+          src="/Media/Images/uyayi website assets/usb_web (27).jpg" 
           alt="Diving" 
           className="absolute inset-0 w-full h-full object-cover"
         />

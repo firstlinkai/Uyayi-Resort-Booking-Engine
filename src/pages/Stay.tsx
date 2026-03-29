@@ -60,7 +60,7 @@ export default function Stay() {
       <section className="relative h-[65vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/30 z-10" />
         <img 
-          src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2070&auto=format&fit=crop" 
+          src="/Media/Images/uyayi website assets/usb_web (35).jpg" 
           alt="Villa at sunset" 
           className="absolute inset-0 w-full h-full object-cover"
         />
