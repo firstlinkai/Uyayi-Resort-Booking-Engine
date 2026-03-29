@@ -8,9 +8,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Stay', path: '/stay' },
-  { name: 'Dining', path: '/dining' },
   { name: 'Activities', path: '/activities' },
-  { name: 'Events', path: '/events' },
   { name: 'Gallery', path: '/gallery' },
   { name: 'Contact', path: '/contact' },
 ];
@@ -49,9 +47,7 @@ export default function Navbar() {
       <nav className={navClasses}>
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 z-50">
-          <span className="font-editorial text-2xl tracking-wide font-medium">
-            Uyayi Sa Baybay
-          </span>
+          <img src="/uyayi-logo.jpeg" alt="Uyayi Sa Baybay Logo" className="h-12 w-auto object-contain rounded-full" />
         </Link>
 
         {/* Desktop Nav */}

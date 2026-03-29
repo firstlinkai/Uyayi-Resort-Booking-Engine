@@ -8,9 +8,9 @@ export default function Footer() {
         
         {/* Column 1 - Brand */}
         <div className="flex flex-col gap-6">
-          <div>
-            <h2 className="font-editorial text-3xl mb-2">Uyayi Sa Baybay</h2>
-            <p className="font-editorial italic text-mist/80 text-lg">Home by the Shore</p>
+          <div className="flex flex-col gap-2">
+            <img src="/uyayi-logo.jpeg" alt="Uyayi Sa Baybay Logo" className="h-20 w-auto object-contain rounded-lg bg-white p-1" />
+            <p className="font-editorial italic text-mist/80 text-lg mt-2">Home by the Shore</p>
           </div>
           <address className="not-italic text-mist/70 text-sm leading-relaxed">
             123 Beachfront Road<br />
@@ -36,8 +36,6 @@ export default function Footer() {
             <li><Link to="/about" className="hover:text-coral transition-colors">About Us</Link></li>
             <li><Link to="/gallery" className="hover:text-coral transition-colors">Gallery</Link></li>
             <li><Link to="/activities" className="hover:text-coral transition-colors">Activities</Link></li>
-            <li><Link to="/dining" className="hover:text-coral transition-colors">Dining</Link></li>
-            <li><Link to="/events" className="hover:text-coral transition-colors">Events</Link></li>
           </ul>
         </div>
 

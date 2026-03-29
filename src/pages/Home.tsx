@@ -47,9 +47,8 @@ export default function Home() {
           muted 
           playsInline 
           className="absolute inset-0 w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2070&auto=format&fit=crop"
         >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-tropical-island-at-sunset-and-clear-blue-water-4334-large.mp4" type="video/mp4" />
+          <source src="/Media/Videos/hero-home.mp4" type="video/mp4" />
         </video>
         
         <div className="relative z-20 text-center text-white px-6 max-w-5xl mx-auto flex flex-col items-center">
@@ -141,17 +140,14 @@ export default function Home() {
           </div>
           <div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-deep-sea mb-8 leading-tight">
-              A Sanctuary Shaped by Sea and Sky
+              A Peaceful Retreat Where Nature Speaks
             </h2>
             <div className="space-y-6 text-text-secondary text-lg leading-relaxed mb-12">
               <p>
-                Nestled on the pristine shores of Palawan, Uyayi Sa Baybay translates to "Home by the Shore." Here, the rhythm of the waves dictates the pace of the day, and barefoot luxury is not just a concept, but a way of life.
+                Uyayi sa Baybay, which translates to "Lullaby by the Shore," was created for those seeking to rediscover the slow, rhythmic pulse of coastal life. Nestled in the heart of Palawan, our resort is a humble tribute to the island's natural beauty.
               </p>
               <p>
-                Our resort was born from a deep respect for the island's natural beauty and a desire to share authentic Filipino hospitality—what we call <em>malasakit</em>. Every villa, every meal, and every interaction is crafted to make you feel deeply cared for.
-              </p>
-              <p>
-                Leave your shoes at the door, disconnect from the noise, and reconnect with what truly matters.
+                Our architecture honors traditional Filipino craftsmanship, using sustainable local materials to create a space that breathes with the tropical landscape. We believe in "quiet comfort"—thoughtfully designed spaces that allow the sound of the waves and the rustle of the palms to be your true luxury.
               </p>
             </div>
             
@@ -159,10 +155,6 @@ export default function Home() {
               <div>
                 <div className="text-4xl font-bold text-deep-sea mb-2">14</div>
                 <div className="font-editorial italic text-text-secondary text-lg">Villas</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-deep-sea mb-2">3</div>
-                <div className="font-editorial italic text-text-secondary text-lg">Restaurants</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-deep-sea mb-2">2018</div>
@@ -291,7 +283,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 6: Dining Teaser */}
+      {/* Section 6: Dining Teaser - Hidden for now
       <section>
         <div className="relative h-[60vh] flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40 z-10" />
@@ -331,6 +323,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Section 7: Guest Testimonials */}
       <section className="py-24 bg-shell px-6">

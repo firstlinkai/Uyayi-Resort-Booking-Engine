@@ -25,9 +25,9 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="stay" element={<Stay />} />
           <Route path="stay/:roomId" element={<RoomDetail />} />
-          <Route path="dining" element={<Dining />} />
+          {/* <Route path="dining" element={<Dining />} /> */}
           <Route path="activities" element={<Activities />} />
-          <Route path="events" element={<Events />} />
+          {/* <Route path="events" element={<Events />} /> */}
           <Route path="gallery" element={<Gallery />} />
           <Route path="contact" element={<Contact />} />
           <Route path="faq" element={<FAQ />} />

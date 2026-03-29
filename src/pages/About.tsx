@@ -59,15 +59,22 @@ export default function About() {
   return (
     <div className="bg-sand min-h-screen">
       {/* Section 1: Page Hero */}
-      <section className="relative h-[65vh] flex items-center justify-center">
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <img 
-          src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2080&auto=format&fit=crop" 
-          alt="Resort Aerial" 
-          className="absolute inset-0 w-full h-full object-cover"
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 z-10"
+          style={{ background: 'linear-gradient(to bottom, rgba(27,58,75,0.25) 0%, rgba(27,58,75,0.45) 100%)' }}
         />
-        <div className="relative z-20 text-center text-white px-6 mt-16">
-          <h1 className="font-editorial italic text-5xl md:text-6xl lg:text-7xl mb-4 tracking-wide">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/Media/Videos/hero-about.mp4" type="video/mp4" />
+        </video>
+        <div className="relative z-20 text-center text-white px-6 mt-16 max-w-5xl">
+          <h1 className="font-editorial italic text-5xl md:text-7xl lg:text-8xl mb-6 tracking-wide leading-tight">
             Our Story
           </h1>
           <p className="font-sans font-light text-lg md:text-xl tracking-wider uppercase opacity-90">
@@ -80,12 +87,12 @@ export default function About() {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           <div className="w-full lg:w-1/2">
-            <h2 className="text-3xl md:text-4xl font-bold text-deep-sea mb-6">A Harmonious Blend of Luxury and Nature</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-deep-sea mb-6">A Peaceful Retreat Where Nature Speaks</h2>
             <p className="text-text-secondary text-lg leading-relaxed mb-6">
-              Uyayi Sa Baybay, which translates to "Lullaby by the Shore," was conceived with a singular vision: to create a luxurious retreat that honors and preserves the pristine beauty of El Nido, Palawan.
+              Uyayi sa Baybay, which translates to "Lullaby by the Shore," was created for those seeking to rediscover the slow, rhythmic pulse of coastal life. Nestled in the heart of Palawan, our resort is a humble tribute to the island's natural beauty.
             </p>
             <p className="text-text-secondary text-lg leading-relaxed">
-              Our architecture draws inspiration from traditional Filipino design, utilizing sustainable local materials to ensure our villas blend seamlessly into the lush tropical landscape. Every element of the resort has been thoughtfully designed to provide an unparalleled guest experience while minimizing our environmental footprint.
+              Our architecture honors traditional Filipino craftsmanship, using sustainable local materials to create a space that breathes with the tropical landscape. We believe in "quiet comfort"—thoughtfully designed spaces that allow the sound of the waves and the rustle of the palms to be your true luxury.
             </p>
           </div>
           <div className="w-full lg:w-1/2 h-[500px] rounded-sm overflow-hidden shadow-lg">
