@@ -58,10 +58,10 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="font-editorial italic text-5xl md:text-7xl lg:text-8xl mb-6 tracking-wide leading-tight">
-              Where Palawan's Shore<br />Becomes Your Home
+              The Shore is Your Shelter
             </h1>
             <p className="font-sans font-light text-lg md:text-xl mb-12 tracking-wider uppercase opacity-90">
-              Discover barefoot luxury at the edge of the Sulu Sea
+              Experience the raw beauty of Aborlan with beachfront camping and native huts at the edge of the Sulu Sea.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link to="/about" className="bg-coral hover:bg-coral-light text-white px-8 py-4 rounded-sm font-semibold uppercase tracking-wider transition-colors w-full sm:w-auto text-sm">

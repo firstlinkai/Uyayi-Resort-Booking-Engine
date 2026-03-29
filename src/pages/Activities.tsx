@@ -105,16 +105,16 @@ export default function Activities() {
       <section className="relative h-[65vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/30 z-10" />
         <img 
-          src="/Media/Images/uyayi website assets/usb_web (27).jpg" 
-          alt="Diving" 
+          src="/Media/Images/beach-04.jpg" 
+          alt="Beach Activities" 
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="relative z-20 text-center text-white px-6 mt-16">
           <h1 className="font-editorial italic text-5xl md:text-6xl lg:text-7xl mb-4 tracking-wide">
-            Adventures Await at Every Tide
+            The Wild is Your Playground
           </h1>
           <p className="font-sans font-light text-lg md:text-xl tracking-wider uppercase opacity-90">
-            From the depths of coral reefs to the peak of limestone cliffs
+            From kayaking the quiet mangroves to starlit bonfires on the shore of Aborlan.
           </p>
         </div>
       </section>

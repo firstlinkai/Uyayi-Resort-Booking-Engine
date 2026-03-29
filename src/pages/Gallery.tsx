@@ -50,10 +50,10 @@ export default function Gallery() {
       <section className="relative h-[40vh] flex items-center justify-center bg-deep-sea">
         <div className="relative z-20 text-center text-white px-6 mt-16">
           <h1 className="font-editorial italic text-5xl md:text-6xl mb-4 tracking-wide">
-            A Glimpse of Paradise
+            Unfiltered Palawan
           </h1>
           <p className="font-sans font-light text-lg md:text-xl tracking-wider uppercase opacity-90">
-            Explore the beauty of Uyayi Sa Baybay
+            A visual journey through the simple, sun-drenched days at Uyayi Sa Baybay.
           </p>
         </div>
       </section>

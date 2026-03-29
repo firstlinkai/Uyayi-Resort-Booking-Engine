@@ -75,10 +75,10 @@ export default function About() {
         </video>
         <div className="relative z-20 text-center text-white px-6 mt-16 max-w-5xl">
           <h1 className="font-editorial italic text-5xl md:text-7xl lg:text-8xl mb-6 tracking-wide leading-tight">
-            Our Story
+            Our Roots in the Sand
           </h1>
           <p className="font-sans font-light text-lg md:text-xl tracking-wider uppercase opacity-90">
-            A sanctuary born from the love of Palawan
+            A humble retreat born from a deep respect for Palawan's untouched coast.
           </p>
         </div>
       </section>

@@ -66,10 +66,10 @@ export default function Stay() {
         />
         <div className="relative z-20 text-center text-white px-6 mt-16">
           <h1 className="font-editorial italic text-5xl md:text-6xl lg:text-7xl mb-4 tracking-wide">
-            Your Private Corner of Paradise
+            Sleep Under the Canopy
           </h1>
           <p className="font-sans font-light text-lg md:text-xl tracking-wider uppercase opacity-90">
-            Choose from our curated collection of villas, suites, and rooms
+            Choose your spot under the palms: from traditional nipa huts to open-air beachfront camping.
           </p>
         </div>
       </section>
