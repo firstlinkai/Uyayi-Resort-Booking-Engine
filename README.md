@@ -1,3 +1,6 @@
+<img width="1024" height="1024" alt="uyayi logo" src="https://github.com/user-attachments/assets/a7c028ee-1ea8-442d-a577-8dbe7d8111da" />
+
+
 # Uyayi Sa Baybay | Full-Stack Hospitality Engine
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-1a4d44?style=for-the-badge)](https://uyayi-resort-booking-engine.vercel.app/)
@@ -35,6 +38,30 @@ Hospitality in rural Palawan faces two major digital hurdles:
 - **Authentic Branding:** A pivot from generic "luxury" to "grounded camping," aligning guest expectations with the raw beauty of Aborlan.
 - **Agentic Workflow Ready:** Designed to integrate with `n8n` for automated guest notifications and lead management.
 
+## 📂 Screenshots
+
+<img width="1888" height="881" alt="Screenshot 2026-04-20 211653" src="https://github.com/user-attachments/assets/7803d5ac-214d-40a2-ae58-712563d799d3" />
+
+---
+
+<img width="1796" height="878" alt="Screenshot 2026-04-20 211703" src="https://github.com/user-attachments/assets/5e672ab8-6fa9-4244-a92e-815f3eb86a25" />
+
+
+---
+
+
+<img width="1711" height="785" alt="Screenshot 2026-04-20 211812" src="https://github.com/user-attachments/assets/c1d1df20-f9f0-436b-8611-0e020845c101" />
+
+---
+
+<img width="1698" height="770" alt="Screenshot 2026-04-20 211714" src="https://github.com/user-attachments/assets/102daa92-23f8-4055-9069-a0bade9043ee" />
+
+---
+
+<img width="1797" height="903" alt="Screenshot 2026-04-20 211737" src="https://github.com/user-attachments/assets/b09ca803-9fbf-4629-bdd9-24673896706f" />
+
+---
+
 ## 📂 Project Structure
 ```text
 ├── public/          # Optimized media assets (compressed for web)
@@ -52,3 +79,4 @@ Suneel Pervez Founder, FirstlinkAI | Automation Specialist & Full-Stack Engineer
 This project is a live case study of how FirstlinkAI bridges the gap between high-end automation and local business infrastructure.
 
 © 2026 FirstlinkAI | Built for the shores of Palawan.
+
