@@ -54,3 +54,20 @@
     @apply font-serif;
   }
 }
+
+/* DayPicker Customization */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: var(--color-coral);
+  --rdp-background-color: var(--color-coral-light);
+  margin: 1em;
+}
+
+.rdp-day_selected {
+  background-color: var(--rdp-accent-color) !important;
+  color: white !important;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: var(--color-sand) !important;
+}

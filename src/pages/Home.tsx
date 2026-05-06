@@ -1,11 +1,24 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown, Calendar, Users, Home as HomeIcon, Star, Instagram, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { DayPicker, DateRange } from 'react-day-picker';
+import { format, addDays } from 'date-fns';
+import 'react-day-picker/dist/style.css';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [guests, setGuests] = useState(2);
+  const [roomType, setRoomType] = useState('All Rooms');
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 3)
+  });
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showGuestPicker, setShowGuestPicker] = useState(false);
+  const [showRoomTypePicker, setShowRoomTypePicker] = useState(false);
+
   const [rooms, setRooms] = useState<any[]>([]);
   const [experiences, setExperiences] = useState<any[]>([]);
   const [dining, setDining] = useState<any[]>([]);
@@ -84,39 +97,150 @@ export default function Home() {
       </section>
       
       {/* Section 2: Quick Booking Bar */}
-      <div className="relative z-30 max-w-6xl mx-auto px-6 -mt-16 hidden md:block">
-        <div className="bg-white shadow-xl rounded-sm p-4 flex items-center justify-between gap-4">
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors border-r border-shell">
+      <div className="relative z-50 max-w-6xl mx-auto px-6 -mt-16 hidden md:block">
+        <div className="bg-white shadow-xl rounded-sm p-4 flex items-center justify-between gap-4 relative">
+          {/* Check-in/out */}
+          <div 
+            className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors border-r border-shell"
+            onClick={() => {
+              setShowDatePicker(!showDatePicker);
+              setShowGuestPicker(false);
+              setShowRoomTypePicker(false);
+            }}
+          >
             <Calendar className="w-5 h-5 text-coral" />
             <div className="flex flex-col">
-              <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Check-in</span>
-              <span className="text-text-primary font-medium">Add date</span>
+              <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Stay Dates</span>
+              <span className="text-text-primary font-medium text-sm">
+                {dateRange?.from ? (
+                  dateRange.to ? (
+                    `${format(dateRange.from, 'MMM d')} - ${format(dateRange.to, 'MMM d')}`
+                  ) : (
+                    format(dateRange.from, 'MMM d')
+                  )
+                ) : (
+                  'Add dates'
+                )}
+              </span>
             </div>
           </div>
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors border-r border-shell">
-            <Calendar className="w-5 h-5 text-coral" />
-            <div className="flex flex-col">
-              <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Check-out</span>
-              <span className="text-text-primary font-medium">Add date</span>
-            </div>
-          </div>
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors border-r border-shell">
+
+          {/* Guests */}
+          <div 
+            className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors border-r border-shell"
+            onClick={() => {
+              setShowGuestPicker(!showGuestPicker);
+              setShowDatePicker(false);
+              setShowRoomTypePicker(false);
+            }}
+          >
             <Users className="w-5 h-5 text-coral" />
             <div className="flex flex-col">
               <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Guests</span>
               <span className="text-text-primary font-medium">{guests} Guests</span>
             </div>
           </div>
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors">
+
+          {/* Room Type */}
+          <div 
+            className="flex-1 flex items-center gap-3 px-4 py-2 hover:bg-mist rounded-sm cursor-pointer transition-colors"
+            onClick={() => {
+              setShowRoomTypePicker(!showRoomTypePicker);
+              setShowDatePicker(false);
+              setShowGuestPicker(false);
+            }}
+          >
             <HomeIcon className="w-5 h-5 text-coral" />
             <div className="flex flex-col">
               <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Room Type</span>
-              <span className="text-text-primary font-medium">All Rooms</span>
+              <span className="text-text-primary font-medium">{roomType}</span>
             </div>
           </div>
-          <button className="bg-deep-sea hover:bg-deep-sea/90 text-white px-8 py-4 rounded-sm font-semibold uppercase tracking-wider transition-colors text-sm whitespace-nowrap">
+
+          <button 
+            onClick={() => navigate('/stay')}
+            className="bg-deep-sea hover:bg-deep-sea/90 text-white px-8 py-4 rounded-sm font-semibold uppercase tracking-wider transition-colors text-sm whitespace-nowrap"
+          >
             Check Availability
           </button>
+
+          {/* Date Picker Popover */}
+          {showDatePicker && (
+            <div className="absolute top-full mt-2 left-0 z-[60] bg-white shadow-2xl border border-shell p-4 rounded-sm">
+              <DayPicker
+                mode="range"
+                selected={dateRange}
+                onSelect={setDateRange}
+                numberOfMonths={2}
+                disabled={{ before: new Date() }}
+                styles={{
+                  caption: { color: '#1B3A4B' },
+                  head_cell: { color: '#829399' },
+                  day_selected: { backgroundColor: '#FF7F50', color: 'white' },
+                  day_today: { color: '#FF7F50', fontWeight: 'bold' }
+                }}
+              />
+              <div className="flex justify-end mt-4">
+                <button 
+                  onClick={() => setShowDatePicker(false)}
+                  className="bg-deep-sea text-white px-4 py-2 text-sm uppercase tracking-widest font-bold"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Guest Picker Popover */}
+          {showGuestPicker && (
+            <div className="absolute top-full mt-2 left-[30%] z-[60] bg-white shadow-2xl border border-shell p-6 rounded-sm min-w-[250px]">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-deep-sea">Number of Guests</div>
+                  <div className="text-xs text-text-muted italic">Adults & Children</div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => setGuests(Math.max(1, guests - 1))}
+                    className="w-8 h-8 rounded-full border border-shell flex items-center justify-center hover:border-coral transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="font-bold text-lg">{guests}</span>
+                  <button 
+                    onClick={() => setGuests(Math.min(10, guests + 1))}
+                    className="w-8 h-8 rounded-full border border-shell flex items-center justify-center hover:border-coral transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowGuestPicker(false)}
+                className="w-full mt-6 bg-deep-sea text-white py-2 text-xs uppercase tracking-widest font-bold"
+              >
+                Apply
+              </button>
+            </div>
+          )}
+
+          {/* Room Type Picker Popover */}
+          {showRoomTypePicker && (
+            <div className="absolute top-full mt-2 right-[15%] z-[60] bg-white shadow-2xl border border-shell p-2 rounded-sm min-w-[200px]">
+              {['All Rooms', 'Villa', 'Suite', 'Deluxe'].map((type) => (
+                <div 
+                  key={type}
+                  className={`px-4 py-3 hover:bg-mist cursor-pointer text-sm font-medium transition-colors ${roomType === type ? 'text-coral bg-mist' : 'text-deep-sea'}`}
+                  onClick={() => {
+                    setRoomType(type);
+                    setShowRoomTypePicker(false);
+                  }}
+                >
+                  {type}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

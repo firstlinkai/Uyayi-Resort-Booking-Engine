@@ -15,6 +15,9 @@ import Events from './pages/Events';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
+import BookingSuccess from './pages/BookingSuccess';
+import BookingCancelled from './pages/BookingCancelled';
+import Admin from './pages/Admin';
 
 export default function App() {
   return (
@@ -31,6 +34,9 @@ export default function App() {
           <Route path="gallery" element={<Gallery />} />
           <Route path="contact" element={<Contact />} />
           <Route path="faq" element={<FAQ />} />
+          <Route path="booking/success" element={<BookingSuccess />} />
+          <Route path="booking/cancelled" element={<BookingCancelled />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </Router>

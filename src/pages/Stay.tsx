@@ -175,9 +175,12 @@ export default function Stay() {
                     </Link>
                   </div>
 
-                  <button className="w-full bg-deep-sea hover:bg-deep-sea/90 text-white py-3 rounded-sm font-semibold uppercase tracking-wider text-sm transition-colors">
+                  <Link 
+                    to={`/stay/${room.id}`} 
+                    className="w-full bg-deep-sea hover:bg-deep-sea/90 text-white py-3 rounded-sm font-semibold uppercase tracking-wider text-sm transition-colors text-center"
+                  >
                     Book Now
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

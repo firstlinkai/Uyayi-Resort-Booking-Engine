@@ -34,6 +34,8 @@ export default function RoomDetail() {
   const [isBooking, setIsBooking] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [guestCount, setGuestCount] = useState(1);
+  const [email, setEmail] = useState('');
+  const [showEmailInput, setShowEmailInput] = useState(false);
 
   useEffect(() => {
     async function fetchRoom() {
@@ -52,6 +54,8 @@ export default function RoomDetail() {
 
         if (data) {
           setRoom(data);
+          // Set initial guest count to 1 or current
+          setGuestCount(1);
         }
       } catch (err) {
         console.error('Unexpected error:', err);
@@ -74,66 +78,48 @@ export default function RoomDetail() {
       // 1. Check if user is logged in
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (!user) {
-        // For this demo, we'll ask for an email if not logged in, 
-        // but in a real app you'd redirect to login.
-        const email = prompt("Please enter your email to continue with the booking:");
-        if (!email) {
-          setIsBooking(false);
-          return;
-        }
-        
-        console.log('Initiating checkout for room:', room.id, 'with email:', email);
-        const { data, error } = await supabase.functions.invoke('create-checkout', {
-          body: {
-            roomId: room.id,
-            checkIn: format(dateRange.from, 'yyyy-MM-dd'),
-            checkOut: format(dateRange.to, 'yyyy-MM-dd'),
-            guestCount,
-            userEmail: email
-          }
-        });
+      const targetEmail = user?.email || email;
 
-        if (error) {
-          console.error('Supabase function error:', error);
-          throw error;
+      if (!targetEmail) {
+        setShowEmailInput(true);
+        setIsBooking(false);
+        return;
+      }
+
+      console.log('Initiating checkout for room:', room.id, 'with email:', targetEmail);
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          roomId: room.id,
+          checkIn: format(dateRange.from, 'yyyy-MM-dd'),
+          checkOut: format(dateRange.to, 'yyyy-MM-dd'),
+          guestCount,
+          userEmail: targetEmail
         }
-        
-        if (data?.url) {
-          console.log('Redirecting to checkout:', data.url);
-          window.location.href = data.url;
-        } else {
-          console.error('No checkout URL returned from function');
-          alert('Could not generate a checkout link. Please contact support.');
-        }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+      
+      if (data?.url) {
+        console.log('Redirecting to checkout:', data.url);
+        window.location.href = data.url;
       } else {
-        console.log('Initiating checkout for logged-in user:', user.email);
-        const { data, error } = await supabase.functions.invoke('create-checkout', {
-          body: {
-            roomId: room.id,
-            checkIn: format(dateRange.from, 'yyyy-MM-dd'),
-            checkOut: format(dateRange.to, 'yyyy-MM-dd'),
-            guestCount,
-            userEmail: user.email
-          }
-        });
-
-        if (error) {
-          console.error('Supabase function error:', error);
-          throw error;
-        }
-        
-        if (data?.url) {
-          console.log('Redirecting to checkout:', data.url);
-          window.location.href = data.url;
-        } else {
-          console.error('No checkout URL returned from function');
-          alert('Could not generate a checkout link. Please contact support.');
-        }
+        console.error('No checkout URL returned from function');
+        alert('Could not generate a checkout link. Please contact support.');
       }
     } catch (err: any) {
       console.error('Booking error detail:', err);
-      alert(`Booking Error: ${err.message || 'There was an error initiating your booking. Please try again.'}`);
+      // Try to get a more detailed error from the response if available
+      let errorMsg = 'There was an error initiating your booking. Please try again.';
+      if (err.context?.json) {
+        const body = await err.context.json();
+        if (body.error) errorMsg = body.error;
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
+      alert(`Booking Error: ${errorMsg}`);
     } finally {
       setIsBooking(false);
     }
@@ -269,17 +255,43 @@ export default function RoomDetail() {
                 </div>
                 
                 {showCalendar && (
-                  <div className="absolute top-full left-0 right-0 z-50 bg-white shadow-xl border border-shell mt-2 p-2 rounded-sm origin-top animate-in fade-in zoom-in duration-200">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 z-50 bg-white shadow-2xl border border-shell mt-2 p-6 rounded-xl origin-top animate-in fade-in zoom-in duration-200 w-[90vw] max-w-4xl lg:w-auto">
+                    <div className="flex justify-between items-center mb-4 lg:hidden">
+                      <h4 className="font-bold text-deep-sea">Select Dates</h4>
+                      <button onClick={() => setShowCalendar(false)} className="text-coral underline text-sm">Close</button>
+                    </div>
                     <DayPicker
                       mode="range"
                       selected={dateRange}
                       onSelect={(range) => {
                         setDateRange(range);
-                        if (range?.from && range?.to) setShowCalendar(false);
                       }}
+                      numberOfMonths={window.innerWidth > 1024 ? 2 : 1}
                       disabled={{ before: new Date() }}
                       className="mx-auto"
+                      modifiersStyles={{
+                        selected: { backgroundColor: '#d97706', color: 'white' },
+                        range_start: { backgroundColor: '#d97706', color: 'white', borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' },
+                        range_end: { backgroundColor: '#d97706', color: 'white', borderTopRightRadius: '50%', borderBottomRightRadius: '50%' },
+                        range_middle: { backgroundColor: '#fef3c7', color: '#d97706' }
+                      }}
                     />
+                    <div className="flex justify-end gap-4 mt-4 pt-4 border-t border-shell">
+                      <button 
+                        onClick={() => {
+                          setDateRange(undefined);
+                        }}
+                        className="text-sm font-medium text-text-muted hover:text-deep-sea transition-colors"
+                      >
+                        Clear dates
+                      </button>
+                      <button 
+                        onClick={() => setShowCalendar(false)}
+                        className="bg-deep-sea text-white px-4 py-2 rounded-sm text-sm font-medium"
+                      >
+                        Apply
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -322,6 +334,21 @@ export default function RoomDetail() {
               </div>
             )}
 
+            {showEmailInput && (
+              <div className="mb-6 p-4 bg-sand/50 border border-coral/20 rounded-sm animate-in slide-in-from-top-2">
+                <label className="text-xs font-medium text-deep-sea uppercase tracking-wider block mb-2">Enter Email to Book</label>
+                <input 
+                  type="email"
+                  placeholder="your@email.com"
+                  className="w-full border border-shell rounded-sm px-4 py-2 text-text-secondary bg-white focus:outline-none focus:border-coral mb-2"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <p className="text-[10px] text-text-muted">We'll use this to send your booking confirmation.</p>
+              </div>
+            )}
+
             <button 
               onClick={handleBookNow}
               disabled={isBooking || !dateRange?.from || !dateRange?.to}
@@ -332,7 +359,9 @@ export default function RoomDetail() {
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Processing...
                 </>
-              ) : 'Book Now'}
+              ) : (
+                showEmailInput ? 'Confirm & Book' : 'Book Now'
+              )}
             </button>
             <p className="text-xs text-center text-text-muted mt-4">Best rate guarantee when you book directly with us.</p>
           </div>
