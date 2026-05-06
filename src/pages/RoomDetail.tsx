@@ -1,7 +1,13 @@
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, Maximize, BedDouble, Check, Wind } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { DayPicker, DateRange } from 'react-day-picker';
+import { format, differenceInDays, addDays } from 'date-fns';
+import { 
+  ArrowLeft, Maximize, Users, BedDouble, Wind, Check, 
+  Minus, Plus, Calendar as CalendarIcon, ChevronDown 
+} from 'lucide-react';
+import 'react-day-picker/dist/style.css';
 
 interface Room {
   id: string;
@@ -21,6 +27,13 @@ export default function RoomDetail() {
   const { roomId } = useParams();
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: addDays(new Date(), 1),
+    to: addDays(new Date(), 3)
+  });
+  const [isBooking, setIsBooking] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [guestCount, setGuestCount] = useState(1);
 
   useEffect(() => {
     async function fetchRoom() {
@@ -49,6 +62,88 @@ export default function RoomDetail() {
 
     fetchRoom();
   }, [roomId]);
+
+  const handleBookNow = async () => {
+    if (!room || !dateRange?.from || !dateRange?.to) {
+      alert("Please select a valid date range");
+      return;
+    }
+
+    setIsBooking(true);
+    try {
+      // 1. Check if user is logged in
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        // For this demo, we'll ask for an email if not logged in, 
+        // but in a real app you'd redirect to login.
+        const email = prompt("Please enter your email to continue with the booking:");
+        if (!email) {
+          setIsBooking(false);
+          return;
+        }
+        
+        console.log('Initiating checkout for room:', room.id, 'with email:', email);
+        const { data, error } = await supabase.functions.invoke('create-checkout', {
+          body: {
+            roomId: room.id,
+            checkIn: format(dateRange.from, 'yyyy-MM-dd'),
+            checkOut: format(dateRange.to, 'yyyy-MM-dd'),
+            guestCount,
+            userEmail: email
+          }
+        });
+
+        if (error) {
+          console.error('Supabase function error:', error);
+          throw error;
+        }
+        
+        if (data?.url) {
+          console.log('Redirecting to checkout:', data.url);
+          window.location.href = data.url;
+        } else {
+          console.error('No checkout URL returned from function');
+          alert('Could not generate a checkout link. Please contact support.');
+        }
+      } else {
+        console.log('Initiating checkout for logged-in user:', user.email);
+        const { data, error } = await supabase.functions.invoke('create-checkout', {
+          body: {
+            roomId: room.id,
+            checkIn: format(dateRange.from, 'yyyy-MM-dd'),
+            checkOut: format(dateRange.to, 'yyyy-MM-dd'),
+            guestCount,
+            userEmail: user.email
+          }
+        });
+
+        if (error) {
+          console.error('Supabase function error:', error);
+          throw error;
+        }
+        
+        if (data?.url) {
+          console.log('Redirecting to checkout:', data.url);
+          window.location.href = data.url;
+        } else {
+          console.error('No checkout URL returned from function');
+          alert('Could not generate a checkout link. Please contact support.');
+        }
+      }
+    } catch (err: any) {
+      console.error('Booking error detail:', err);
+      alert(`Booking Error: ${err.message || 'There was an error initiating your booking. Please try again.'}`);
+    } finally {
+      setIsBooking(false);
+    }
+  };
+
+  const nights = dateRange?.from && dateRange?.to 
+    ? differenceInDays(dateRange.to, dateRange.from) 
+    : 0;
+  
+  const totalPrice = room ? (room.base_price_php || room.price) * nights : 0;
 
   if (loading) {
     return (
@@ -152,24 +247,92 @@ export default function RoomDetail() {
             </div>
 
             <div className="space-y-4 mb-8">
-              <div className="space-y-2">
+              <div className="space-y-2 relative">
                 <label className="text-xs font-medium text-deep-sea uppercase tracking-wider">Check-in / Check-out</label>
-                <div className="border border-shell rounded-sm px-4 py-3 text-text-secondary bg-sand/30 cursor-pointer">
-                  Select dates
+                <div 
+                  className="border border-shell rounded-sm px-4 py-3 text-text-secondary bg-sand/30 cursor-pointer flex justify-between items-center"
+                  onClick={() => setShowCalendar(!showCalendar)}
+                >
+                  <div className="flex items-center gap-3">
+                    <CalendarIcon className="w-4 h-4 text-coral" />
+                    <span className="flex-1">
+                      {dateRange?.from ? (
+                        <>
+                          {format(dateRange.from, 'MMM dd')} - {dateRange.to ? format(dateRange.to, 'MMM dd') : 'Select end date'}
+                        </>
+                      ) : (
+                        'Select dates'
+                      )}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${showCalendar ? 'rotate-180' : ''}`} />
+                  </div>
                 </div>
+                
+                {showCalendar && (
+                  <div className="absolute top-full left-0 right-0 z-50 bg-white shadow-xl border border-shell mt-2 p-2 rounded-sm origin-top animate-in fade-in zoom-in duration-200">
+                    <DayPicker
+                      mode="range"
+                      selected={dateRange}
+                      onSelect={(range) => {
+                        setDateRange(range);
+                        if (range?.from && range?.to) setShowCalendar(false);
+                      }}
+                      disabled={{ before: new Date() }}
+                      className="mx-auto"
+                    />
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-medium text-deep-sea uppercase tracking-wider">Guests</label>
-                <select className="w-full border border-shell rounded-sm px-4 py-3 text-text-secondary bg-sand/30 focus:outline-none focus:border-coral appearance-none">
-                  <option>1 Adult</option>
-                  <option>2 Adults</option>
-                  <option>2 Adults, 1 Child</option>
-                </select>
+                <div className="flex items-center justify-between border border-shell rounded-sm px-4 py-3 bg-sand/30">
+                  <span className="text-text-secondary">
+                    {guestCount} {guestCount === 1 ? 'Guest' : 'Guests'}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => setGuestCount(Math.max(1, guestCount - 1))}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-shell text-deep-sea hover:border-coral hover:text-coral transition-colors"
+                      type="button"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => setGuestCount(Math.min((room as any).max_guests || 4, guestCount + 1))}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-shell text-deep-sea hover:border-coral hover:text-coral transition-colors"
+                      type="button"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <button className="w-full bg-coral hover:bg-coral-light text-white px-8 py-4 rounded-sm font-semibold uppercase tracking-wider transition-colors">
-              Book Now
+            {nights > 0 && (
+              <div className="mb-6 space-y-2 py-4 border-t border-shell">
+                <div className="flex justify-between text-sm">
+                  <span className="text-text-secondary">₱{((room as any).base_price_php || room.price)?.toLocaleString()} x {nights} nights</span>
+                  <span className="text-deep-sea font-medium">₱{totalPrice.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-base font-bold pt-2 border-t border-shell/50">
+                  <span className="text-deep-sea">Total</span>
+                  <span className="text-coral">₱{totalPrice.toLocaleString()}</span>
+                </div>
+              </div>
+            )}
+
+            <button 
+              onClick={handleBookNow}
+              disabled={isBooking || !dateRange?.from || !dateRange?.to}
+              className="w-full bg-coral hover:bg-coral-light disabled:bg-coral/50 text-white px-8 py-4 rounded-sm font-semibold uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+            >
+              {isBooking ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Processing...
+                </>
+              ) : 'Book Now'}
             </button>
             <p className="text-xs text-center text-text-muted mt-4">Best rate guarantee when you book directly with us.</p>
           </div>
