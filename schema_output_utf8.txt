@@ -1,0 +1,20 @@
+﻿[dotenv@17.3.1] injecting env (2) from .env -- tip: ΓÜÖ∩╕Å  load multiple .env files with { path: ['.env.local', '.env'] }
+
+
+=== Table: rooms ===
+Sample row keys for rooms: id, name, slug, room_type, room_number, description, short_description, base_price_php, weekend_price_php, max_adults, max_children, max_guests, bed_configuration, size_sqm, floor_level, view, amenities, highlights, images, thumbnail_url, is_active, is_featured, display_order, meta_title, meta_description, created_at, updated_at
+- has 'thumbnail_url'
+
+
+=== Table: activities ===
+Sample row keys for activities: id, name, slug, category, description, short_description, what_to_expect, price_per_person_php, price_note, is_free, min_guests, max_guests, duration_minutes, difficulty_level, age_minimum, what_to_bring, included_items, images, thumbnail_url, video_url, is_active, is_featured, requires_booking, display_order, meta_title, meta_description, created_at, updated_at
+- has 'thumbnail_url'
+
+
+=== Table: dining_options ===
+Sample row keys for dining_options: id, name, slug, type, tagline, description, cuisine, ambiance, seating_capacity, indoor_outdoor, dress_code, opening_hours, reservations_required, reservation_link, menu_pdf_url, cover_image, gallery_images, features, is_active, display_order, created_at, updated_at
+
+
+=== Table: team_members ===
+Sample row keys for team_members: id, name, title, department, bio, photo_url, email, phone, linkedin_url, display_on_website, display_order, is_leadership, joined_date, created_at, updated_at
+- has 'photo_url'

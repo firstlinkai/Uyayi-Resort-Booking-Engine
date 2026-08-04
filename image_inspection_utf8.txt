@@ -1,0 +1,98 @@
+﻿[dotenv@17.3.1] injecting env (2) from .env -- tip: ≡ƒñû agentic secret storage: https://dotenvx.com/as2
+=== ROOMS DATA ===
+[
+  {
+    "name": "Beachfront Villa",
+    "thumbnail_url": null
+  },
+  {
+    "name": "Ocean Suite",
+    "thumbnail_url": null
+  },
+  {
+    "name": "Garden Deluxe Room",
+    "thumbnail_url": null
+  },
+  {
+    "name": "Family Villa",
+    "thumbnail_url": null
+  },
+  {
+    "name": "Pool Suite",
+    "thumbnail_url": null
+  }
+]
+
+=== ACTIVITIES DATA ===
+[
+  {
+    "name": "Island Hopping Tour",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Scuba Diving",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Stand-Up Paddleboarding",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Kayaking",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Sunset Cruise",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Sunrise Beach Yoga",
+    "thumbnail_url": null,
+    "category": "wellness"
+  },
+  {
+    "name": "Beach Bonfire",
+    "thumbnail_url": null,
+    "category": "beach_activities"
+  },
+  {
+    "name": "Snorkeling",
+    "thumbnail_url": null,
+    "category": "water_sports"
+  },
+  {
+    "name": "Cultural Village Tour",
+    "thumbnail_url": null,
+    "category": "cultural"
+  },
+  {
+    "name": "Mangrove Firefly Tour",
+    "thumbnail_url": null,
+    "category": "cultural"
+  }
+]
+
+=== DINING DATA ===
+[
+  {
+    "name": "Baybayin Grill",
+    "cover_image": null
+  },
+  {
+    "name": "Sipat Caf├⌐",
+    "cover_image": null
+  },
+  {
+    "name": "The Tide Bar",
+    "cover_image": null
+  },
+  {
+    "name": "Pick-a-Chai Cafe",
+    "cover_image": null
+  }
+]
